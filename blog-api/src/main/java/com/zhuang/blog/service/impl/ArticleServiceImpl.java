@@ -1,10 +1,10 @@
 package com.zhuang.blog.service.impl;
 
 import com.zhuang.blog.dao.ArticleDao;
-import com.zhuang.blog.pojo.Article;
-import com.zhuang.blog.service.ArticleService;
 import com.zhuang.blog.entity.PageParam;
 import com.zhuang.blog.entity.Result;
+import com.zhuang.blog.pojo.Article;
+import com.zhuang.blog.service.ArticleService;
 import com.zhuang.blog.service.SysUserService;
 import com.zhuang.blog.service.TagService;
 import com.zhuang.blog.vo.ArticleVo;
@@ -40,12 +40,46 @@ public class ArticleServiceImpl implements ArticleService {
      * @return
      */
     @Override
-    public Result listArchives(PageParam pageParam) {
+    public Result listArticle(PageParam pageParam) {
         int page = pageParam.getPage();
         int pageSize = pageParam.getPageSize();
-        List<Article> articles = articleDao.listArchives((page - 1) * pageSize, pageSize);
+        List<Article> articles = articleDao.listArticle((page - 1) * pageSize, pageSize);
         List<ArticleVo> articleVos = copyList(articles, true, true);
         return Result.success(articleVos);
+    }
+
+    /**
+     * 最热文章
+     *
+     * @param limit 限制系数
+     * @return
+     */
+    @Override
+    public Result hotArticle(int limit) {
+        List<Article> articles = articleDao.hotArticle(limit);
+        return Result.success(copyList(articles, false, false));
+    }
+
+    /**
+     * 最新文章
+     *
+     * @param limit 限制系数
+     * @return
+     */
+    @Override
+    public Result newArticles(int limit) {
+        List<Article> articles = articleDao.newArticles(limit);
+        return Result.success(copyList(articles, false, false));
+    }
+
+    /**
+     * 文章归档
+     *
+     * @return
+     */
+    @Override
+    public Result listArchives() {
+        return Result.success(articleDao.listArchives());
     }
 
     /**

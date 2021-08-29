@@ -4,11 +4,30 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace：给哪个接口配置的映射，写接口的全限定类名-->
 <mapper namespace="com.zhuang.blog.dao.ArticleDao">
+    <select id="newArticles" resultType="com.zhuang.blog.pojo.Article" parameterType="integer">
+        select id,title from ms_article ORDER BY create_date DESC limit #{limit};
+    </select>
 
-    <select id="listArchives" resultMap="ArticleMap" parameterType="integer">
+    <select id="listArticle" resultMap="ArticleMap" parameterType="integer">
         select *
         from ms_article
         ORDER BY create_date, weight limit #{start}, #{end}
+    </select>
+
+    <select id="hotArticle" resultType="com.zhuang.blog.pojo.Article" parameterType="integer">
+        select id,title from ms_article ORDER BY view_counts DESC limit #{limit};
+    </select>
+
+    <select id="listArchives" resultType="com.zhuang.blog.entity.Articles">
+        SELECT
+            FROM_UNIXTIME( create_date / 1000, '%Y' ) YEAR,
+            FROM_UNIXTIME( create_date / 1000, '%m' ) MONTH,
+            COUNT( 1 ) count
+        FROM
+            ms_article
+        GROUP BY
+            YEAR,
+            MONTH;
     </select>
 
     <resultMap id="ArticleMap" type="com.zhuang.blog.pojo.Article">

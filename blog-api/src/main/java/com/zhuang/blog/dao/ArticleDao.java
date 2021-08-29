@@ -1,5 +1,6 @@
 package com.zhuang.blog.dao;
 
+import com.zhuang.blog.entity.Articles;
 import com.zhuang.blog.pojo.Article;
 
 import java.util.List;
@@ -18,5 +19,28 @@ public interface ArticleDao {
      * @param end   limit结束位
      * @return
      */
-    List<Article> listArchives(int start, int end);
+    List<Article> listArticle(int start, int end);
+
+    /**
+     * 最热文章
+     *
+     * @param limit 限制系数
+     * @return
+     */
+    List<Article> hotArticle(int limit);
+
+    /**
+     * 最新文章
+     *
+     * @param limit 限制系数
+     * @return
+     */
+    List<Article> newArticles(int limit);
+
+    /**
+     * 文章归档
+     *
+     * @return
+     */
+    List<Articles> listArchives();
 }
