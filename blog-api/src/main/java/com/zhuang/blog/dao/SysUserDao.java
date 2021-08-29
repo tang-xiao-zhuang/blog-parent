@@ -15,4 +15,13 @@ public interface SysUserDao {
      * @return
      */
     SysUser findById(Long id);
+
+    /**
+     * 根据用户名密码获取用户信息
+     *
+     * @param account  账户名
+     * @param password 密码
+     * @return
+     */
+    SysUser findUserByAccountAndPassword(String account, String password);
 }

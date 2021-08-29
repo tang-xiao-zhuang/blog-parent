@@ -1,5 +1,6 @@
 package com.zhuang.blog.service;
 
+import com.zhuang.blog.entity.Result;
 import com.zhuang.blog.pojo.SysUser;
 
 /**
@@ -15,4 +16,29 @@ public interface SysUserService {
      * @return
      */
     SysUser findById(Long id);
+
+    /**
+     * 根据用户名密码获取用户信息
+     *
+     * @param account  账户名
+     * @param password 密码
+     * @return
+     */
+    SysUser findUserByAccountAndPassword(String account, String password);
+
+    /**
+     * 根据token获取用户信息
+     *
+     * @param token token信息
+     * @return
+     */
+    Result findUserByToken(String token);
+
+    /**
+     * 退出登录
+     *
+     * @param token
+     * @return
+     */
+    Result logout(String token);
 }

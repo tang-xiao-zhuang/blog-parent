@@ -10,6 +10,9 @@
         from ms_sys_user
         where id = #{id}
     </select>
+    <select id="findUserByAccountAndPassword" resultMap="SysUserMap" parameterType="string">
+        select * from ms_sys_user where account = #{account} and password = #{password}
+    </select>
 
     <resultMap id="SysUserMap" type="com.zhuang.blog.pojo.SysUser">
         <id property="id" column="id"/>
