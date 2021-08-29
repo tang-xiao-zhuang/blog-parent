@@ -1,5 +1,7 @@
 package com.zhuang.blog.service;
 
+import com.zhuang.blog.pojo.SysUser;
+
 /**
  * @Author tangqingbo
  * @Date 2021/8/28 12:04
@@ -12,5 +14,5 @@ public interface SysUserService {
      * @param id 作者ID
      * @return
      */
-    String findById(Long id);
+    SysUser findById(Long id);
 }

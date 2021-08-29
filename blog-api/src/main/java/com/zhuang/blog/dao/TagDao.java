@@ -18,4 +18,12 @@ public interface TagDao {
      * @return
      */
     List<Tag> findByArticleId(Long articleId);
+
+    /**
+     * 最热标签
+     *
+     * @param limit 限制条数
+     * @return
+     */
+    List<Tag> listHotTags(int limit);
 }

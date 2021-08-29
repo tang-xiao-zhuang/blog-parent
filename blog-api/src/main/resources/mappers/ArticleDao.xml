@@ -6,7 +6,9 @@
 <mapper namespace="com.zhuang.blog.dao.ArticleDao">
 
     <select id="listArchives" resultMap="ArticleMap" parameterType="integer">
-        select * from ms_article ORDER BY create_date,weight limit #{start},#{end}
+        select *
+        from ms_article
+        ORDER BY create_date, weight limit #{start}, #{end}
     </select>
 
     <resultMap id="ArticleMap" type="com.zhuang.blog.pojo.Article">

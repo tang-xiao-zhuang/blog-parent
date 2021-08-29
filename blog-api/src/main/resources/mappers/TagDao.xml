@@ -6,6 +6,18 @@
 <mapper namespace="com.zhuang.blog.dao.TagDao">
 
     <select id="findByArticleId" parameterType="long" resultType="com.zhuang.blog.pojo.Tag">
-        select t.id,t.avatar,t.tag_name tagName from ms_article_tag at left JOIN  ms_tag t on at.tag_id = t.id where at.article_id = #{articleId};
+        select t.id, t.avatar, t.tag_name tagName
+        from ms_article_tag at left JOIN  ms_tag t
+        on at.tag_id = t.id
+        where at.article_id = #{articleId};
+    </select>
+
+    <select id="listHotTags" resultType="com.zhuang.blog.pojo.Tag" parameterType="integer">
+        select t.id, t.avatar, t.tag_name tagName
+        from ms_tag t
+                 LEFT JOIN ms_article_tag at
+        on t.id = at.tag_id left join ms_article a on a.id = at.article_id
+        GROUP BY t.id
+        ORDER BY COUNT(1) DESC limit #{limit}
     </select>
 </mapper>

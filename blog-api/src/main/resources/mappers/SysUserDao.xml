@@ -5,7 +5,25 @@
 <!--namespace：给哪个接口配置的映射，写接口的全限定类名-->
 <mapper namespace="com.zhuang.blog.dao.SysUserDao">
 
-    <select id="findById" parameterType="long" resultType="string">
-        select nickname from ms_sys_user where id = #{id}
+    <select id="findById" parameterType="long" resultMap="SysUserMap">
+        select *
+        from ms_sys_user
+        where id = #{id}
     </select>
+
+    <resultMap id="SysUserMap" type="com.zhuang.blog.pojo.SysUser">
+        <id property="id" column="id"/>
+        <result property="account" column="account"/>
+        <result property="admin" column="admin"/>
+        <result property="avatar" column="avatar"/>
+        <result property="createDate" column="create_date"/>
+        <result property="deleted" column="deleted"/>
+        <result property="email" column="email"/>
+        <result property="lastLogin" column="last_login"/>
+        <result property="mobilePhoneNumber" column="mobile_phone_number"/>
+        <result property="nickname" column="nickname"/>
+        <result property="password" column="password"/>
+        <result property="salt" column="salt"/>
+        <result property="status" column="status"/>
+    </resultMap>
 </mapper>

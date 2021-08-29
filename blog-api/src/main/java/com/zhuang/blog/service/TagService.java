@@ -17,4 +17,12 @@ public interface TagService {
      * @return
      */
     List<TagVo> findByArticleId(Long articleId);
+
+    /**
+     * 首页-最热标签
+     *
+     * @param limit
+     * @return
+     */
+    List<TagVo> listHotTags(int limit);
 }

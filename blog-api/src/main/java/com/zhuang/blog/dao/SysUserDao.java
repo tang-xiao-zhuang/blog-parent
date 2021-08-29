@@ -14,5 +14,5 @@ public interface SysUserDao {
      * @param id 用户ID
      * @return
      */
-    String findById(Long id);
+    SysUser findById(Long id);
 }

@@ -34,12 +34,37 @@ public class TagServiceImpl implements TagService {
         return copyList(tags);
     }
 
-    public TagVo copy(Tag tag){
+    /**
+     * 首页-最热标签
+     *
+     * @param limit
+     * @return
+     */
+    @Override
+    public List<TagVo> listHotTags(int limit) {
+        List<Tag> tags = tagDao.listHotTags(limit);
+        return copyList(tags);
+    }
+
+    /**
+     * 类型转换
+     *
+     * @param tag
+     * @return
+     */
+    public TagVo copy(Tag tag) {
         TagVo tagVo = new TagVo();
-        BeanUtils.copyProperties(tag,tagVo);
+        BeanUtils.copyProperties(tag, tagVo);
         return tagVo;
     }
-    public List<TagVo> copyList(List<Tag> tagList){
+
+    /**
+     * 类型转换
+     *
+     * @param tagList
+     * @return
+     */
+    public List<TagVo> copyList(List<Tag> tagList) {
         List<TagVo> tagVoList = new ArrayList<>();
         tagList.forEach(t -> tagVoList.add(copy(t)));
         return tagVoList;

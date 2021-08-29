@@ -44,7 +44,7 @@ public class ArticleServiceImpl implements ArticleService {
         int page = pageParam.getPage();
         int pageSize = pageParam.getPageSize();
         List<Article> articles = articleDao.listArchives((page - 1) * pageSize, pageSize);
-        List<ArticleVo> articleVos = copyList(articles);
+        List<ArticleVo> articleVos = copyList(articles, true, true);
         return Result.success(articleVos);
     }
 
@@ -54,9 +54,9 @@ public class ArticleServiceImpl implements ArticleService {
      * @param articles 数据源
      * @return
      */
-    private List<ArticleVo> copyList(List<Article> articles) {
+    private List<ArticleVo> copyList(List<Article> articles, boolean isTag, boolean isAuthor) {
         List<ArticleVo> voList = new ArrayList<>();
-        articles.forEach(a -> voList.add(copy(a, true, true)));
+        articles.forEach(a -> voList.add(copy(a, isTag, isAuthor)));
         return voList;
     }
 
@@ -78,7 +78,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         if (isAuthor) {
             Long authorId = article.getAuthorId();
-            articleVo.setAuthor(sysUserService.findById(authorId));
+            articleVo.setAuthor(sysUserService.findById(authorId).getNickname());
         }
         return articleVo;
     }
