@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：给哪个接口配置的映射，写接口的全限定类名-->
+<mapper namespace="com.zhuang.blog.dao.TagDao">
+
+    <select id="findByArticleId" parameterType="long" resultType="com.zhuang.blog.pojo.Tag">
+        select t.id,t.avatar,t.tag_name tagName from ms_article_tag at left JOIN  ms_tag t on at.tag_id = t.id where at.article_id = #{articleId};
+    </select>
+</mapper>

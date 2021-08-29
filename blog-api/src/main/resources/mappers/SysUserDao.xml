@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：给哪个接口配置的映射，写接口的全限定类名-->
+<mapper namespace="com.zhuang.blog.dao.SysUserDao">
+
+    <select id="findById" parameterType="long" resultType="string">
+        select nickname from ms_sys_user where id = #{id}
+    </select>
+</mapper>

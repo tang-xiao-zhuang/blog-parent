@@ -1,5 +1,9 @@
 package com.zhuang.blog.dao;
 
+import com.zhuang.blog.pojo.Tag;
+
+import java.util.List;
+
 /**
  * @Author tangqingbo
  * @Date 2021/8/27 23:21
@@ -7,4 +11,11 @@ package com.zhuang.blog.dao;
  */
 public interface TagDao {
 
+    /**
+     * 根据文章ID获取标签信息
+     *
+     * @param articleId 文章ID
+     * @return
+     */
+    List<Tag> findByArticleId(Long articleId);
 }
