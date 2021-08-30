@@ -41,4 +41,19 @@ public interface SysUserService {
      * @return
      */
     Result logout(String token);
+
+    /**
+     * 根据账户查找用户
+     *
+     * @param account 账户名
+     * @return
+     */
+    SysUser findUserByAccount(String account);
+
+    /**
+     * 新增用户
+     *
+     * @param sysUser
+     */
+    void save(SysUser sysUser);
 }

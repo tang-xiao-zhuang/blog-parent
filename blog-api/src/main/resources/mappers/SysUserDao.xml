@@ -4,6 +4,41 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace：给哪个接口配置的映射，写接口的全限定类名-->
 <mapper namespace="com.zhuang.blog.dao.SysUserDao">
+    <insert id="save" parameterType="com.zhuang.blog.pojo.SysUser">
+        <selectKey resultType="long" order="AFTER" keyProperty="id">
+            select last_insert_id();
+        </selectKey>
+        insert into ms_sys_user
+        (
+        account,
+        admin,
+        avatar,
+        create_date,
+        deleted,
+        email,
+        last_login,
+        mobile_phone_number,
+        nickname,
+        password,
+        salt,
+        status
+        )
+        VALUES
+        (
+        #{account},
+        #{admin},
+        #{avatar},
+        #{createDate},
+        #{deleted},
+        #{email},
+        #{lastLogin},
+        #{mobilePhoneNumber},
+        #{nickname},
+        #{password},
+        #{salt},
+        #{status}
+        );
+    </insert>
 
     <select id="findById" parameterType="long" resultMap="SysUserMap">
         select *
@@ -12,6 +47,10 @@
     </select>
     <select id="findUserByAccountAndPassword" resultMap="SysUserMap" parameterType="string">
         select * from ms_sys_user where account = #{account} and password = #{password}
+    </select>
+
+    <select id="findUserByAccount" resultMap="SysUserMap" parameterType="string">
+        select * from ms_sys_user where account = #{account}
     </select>
 
     <resultMap id="SysUserMap" type="com.zhuang.blog.pojo.SysUser">

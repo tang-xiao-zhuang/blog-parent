@@ -86,4 +86,25 @@ public class SysUserServiceImpl implements SysUserService {
         redisTemplate.delete("TOKEN_" + token);
         return Result.success(null);
     }
+
+    /**
+     * 根据账户查找用户
+     *
+     * @param account 账户名
+     * @return
+     */
+    @Override
+    public SysUser findUserByAccount(String account) {
+        return sysUserDao.findUserByAccount(account);
+    }
+
+    /**
+     * 新增用户
+     *
+     * @param sysUser
+     */
+    @Override
+    public void save(SysUser sysUser) {
+        sysUserDao.save(sysUser);
+    }
 }

@@ -86,4 +86,46 @@ public class LoginServiceImpl implements LoginService {
         }
         return new Gson().fromJson(userJson, SysUser.class);
     }
+
+    /**
+     * 注册
+     *
+     * @param loginParam
+     * @return
+     */
+    @Override
+    public Result register(LoginParam loginParam) {
+        String account = loginParam.getAccount();
+        String password = loginParam.getPassword();
+        String nickname = loginParam.getNickname();
+        //判断参数信息
+        if (StringUtils.isBlank(account) || StringUtils.isBlank(password) || StringUtils.isBlank(nickname)) {
+            return Result.fail(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
+        }
+        //查询账户是否被使用
+        SysUser sysUser = sysUserService.findUserByAccount(account);
+        if (sysUser != null) {
+            return Result.fail(ErrorCode.ACCOUNT_EXISTS.getCode(), ErrorCode.ACCOUNT_EXISTS.getMsg());
+        }
+        //注册用户
+        SysUser user = new SysUser();
+        user.setNickname(nickname);
+        user.setAccount(account);
+        user.setPassword(DigestUtils.md5Hex(password + SLAT));
+        user.setCreateDate(System.currentTimeMillis());
+        user.setLastLogin(System.currentTimeMillis());
+        user.setAvatar("/static/img/logo.b3a48c0.png");
+        user.setAdmin(1);
+        user.setDeleted(0);
+        user.setSalt("");
+        user.setStatus("");
+        user.setEmail("");
+        sysUserService.save(user);
+
+        //生成token
+        String token = JWTUtils.createToken(user.getId());
+        //将用户信息存入Redis 设置过期时间为1天
+        redisTemplate.opsForValue().set("TOKEN_" + token, new Gson().toJson(user), 1, TimeUnit.DAYS);
+        return Result.success(token);
+    }
 }
