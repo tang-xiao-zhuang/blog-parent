@@ -1,7 +1,10 @@
 package com.zhuang.blog.config;
 
+import com.zhuang.blog.handle.LoginInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 /**
@@ -11,6 +14,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
  */
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
+
+    @Autowired
+    private LoginInterceptor loginInterceptor;
+
     /**
      * 跨域解决
      */
@@ -27,5 +34,16 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                         "X-Frame-Options")
                 .allowCredentials(false).maxAge(3600);
         super.addCorsMappings(registry);
+    }
+
+    /**
+     * 添加拦截器
+     *
+     * @param registry
+     */
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        //todo 需要拦截的路径后续配置
+        registry.addInterceptor(loginInterceptor).addPathPatterns("/test");
     }
 }
