@@ -7,17 +7,13 @@ import com.zhuang.blog.entity.Result;
 import com.zhuang.blog.pojo.Article;
 import com.zhuang.blog.pojo.ArticleBody;
 import com.zhuang.blog.pojo.Category;
-import com.zhuang.blog.service.ArticleService;
-import com.zhuang.blog.service.CategoryService;
-import com.zhuang.blog.service.SysUserService;
-import com.zhuang.blog.service.TagService;
+import com.zhuang.blog.service.*;
 import com.zhuang.blog.vo.ArticleBodyVo;
 import com.zhuang.blog.vo.ArticleVo;
 import com.zhuang.blog.vo.CategoryVo;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -45,6 +41,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private AsyncService asyncService;
 
     /**
      * 首页文章列表
@@ -105,19 +104,8 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleVo findArticleBodyById(Long articleId) {
         Article article = articleDao.findById(articleId);
         //浏览量+1
-        addViewCount(article);
+        asyncService.addViewCount(article);
         return copy(article, true, true, true, true);
-    }
-
-    /**
-     * 增加浏览量
-     *
-     * @param article
-     */
-    @Async
-    public void addViewCount(Article article) {
-        article.setViewCounts(article.getViewCounts() + 1);
-        articleDao.updateViewCount(article.getId());
     }
 
     /**
