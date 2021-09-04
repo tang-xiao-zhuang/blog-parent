@@ -51,4 +51,11 @@ public interface ArticleDao {
      * @return
      */
     Article findById(Long articleId);
+
+    /**
+     * 修改浏览量
+     *
+     * @param articleId
+     */
+    void updateViewCount(Long articleId);
 }

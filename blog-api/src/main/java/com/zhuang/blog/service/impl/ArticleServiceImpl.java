@@ -17,6 +17,7 @@ import com.zhuang.blog.vo.CategoryVo;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -103,7 +104,20 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleVo findArticleBodyById(Long articleId) {
         Article article = articleDao.findById(articleId);
+        //浏览量+1
+        addViewCount(article);
         return copy(article, true, true, true, true);
+    }
+
+    /**
+     * 增加浏览量
+     *
+     * @param article
+     */
+    @Async
+    public void addViewCount(Article article) {
+        article.setViewCounts(article.getViewCounts() + 1);
+        articleDao.updateViewCount(article.getId());
     }
 
     /**
