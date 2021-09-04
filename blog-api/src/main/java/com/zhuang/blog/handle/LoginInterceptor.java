@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.zhuang.blog.entity.Result;
 import com.zhuang.blog.pojo.SysUser;
 import com.zhuang.blog.service.LoginService;
+import com.zhuang.blog.utils.UserThreadLocalUtil;
 import com.zhuang.blog.vo.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -41,8 +42,8 @@ public class LoginInterceptor implements HandlerInterceptor {
         String token = request.getHeader("Authorization");
         log.info("=================request start===========================");
         String requestURI = request.getRequestURI();
-        log.info("request uri:{}",requestURI);
-        log.info("request method:{}",request.getMethod());
+        log.info("request uri:{}", requestURI);
+        log.info("request method:{}", request.getMethod());
         log.info("token:{}", token);
         log.info("=================request end===========================");
         if (StringUtils.isBlank(token)) {
@@ -59,6 +60,16 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.getWriter().print(new Gson().toJson(result));
             return false;
         }
+        //校验成功,将用户信息放入ThreadLocal中
+        UserThreadLocalUtil.put(sysUser);
         return true;
+    }
+
+    /**
+     * 执行后移除ThreadLocal中保存的用户信息,防止内存泄露
+     */
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        UserThreadLocalUtil.remove();
     }
 }
