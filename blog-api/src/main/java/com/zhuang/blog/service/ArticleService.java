@@ -2,6 +2,7 @@ package com.zhuang.blog.service;
 
 import com.zhuang.blog.entity.PageParam;
 import com.zhuang.blog.entity.Result;
+import com.zhuang.blog.vo.ArticleVo;
 
 /**
  * @Author tangqingbo
@@ -40,4 +41,12 @@ public interface ArticleService {
      * @return
      */
     Result listArchives();
+
+    /**
+     * 根据文章ID获取文章详情
+     *
+     * @param articleId
+     * @return
+     */
+    ArticleVo findArticleBodyById(Long articleId);
 }

@@ -43,4 +43,12 @@ public interface ArticleDao {
      * @return
      */
     List<Articles> listArchives();
+
+    /**
+     * 根据ID获取文章信息
+     *
+     * @param articleId
+     * @return
+     */
+    Article findById(Long articleId);
 }

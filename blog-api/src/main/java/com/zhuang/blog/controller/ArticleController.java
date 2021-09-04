@@ -3,10 +3,9 @@ package com.zhuang.blog.controller;
 import com.zhuang.blog.service.ArticleService;
 import com.zhuang.blog.entity.PageParam;
 import com.zhuang.blog.entity.Result;
+import com.zhuang.blog.vo.ArticleVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author tangqingbo
@@ -18,6 +17,18 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+
+    /**
+     * 根据文章ID获取文章详情
+     *
+     * @param articleId
+     * @return
+     */
+    @PostMapping("/articles/view/{articleId}")
+    public Result findArticleBodyById(@PathVariable(value = "articleId") Long articleId) {
+        ArticleVo articleVo = articleService.findArticleBodyById(articleId);
+        return Result.success(articleVo);
+    }
 
     /**
      * 首页-文章列表

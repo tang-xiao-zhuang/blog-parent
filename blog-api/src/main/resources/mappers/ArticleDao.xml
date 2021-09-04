@@ -30,6 +30,10 @@
             MONTH;
     </select>
 
+    <select id="findById" resultMap="ArticleMap" parameterType="long">
+        select * from ms_article where id = #{articleId}
+    </select>
+
     <resultMap id="ArticleMap" type="com.zhuang.blog.pojo.Article">
         <id property="id" column="id"/>
         <result property="commentCounts" column="comment_counts"/>

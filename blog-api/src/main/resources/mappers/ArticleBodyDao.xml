@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：给哪个接口配置的映射，写接口的全限定类名-->
+<mapper namespace="com.zhuang.blog.dao.ArticleBodyDao">
+
+
+    <select id="findByArticleId" resultType="com.zhuang.blog.pojo.ArticleBody" parameterType="long">
+        select ab.id, ab.content, ab.content_html contentHtml, ab.article_id articleId
+        from ms_article_body ab
+        where article_id = #{articleId};
+    </select>
+</mapper>

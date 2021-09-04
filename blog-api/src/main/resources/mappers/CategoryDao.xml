@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：给哪个接口配置的映射，写接口的全限定类名-->
+<mapper namespace="com.zhuang.blog.dao.CategoryDao">
+
+    <select id="findById" resultType="com.zhuang.blog.pojo.Category" parameterType="long">
+        select mc.id,mc.avatar,mc.category_name categoryName,mc.description from ms_category mc where id = #{categoryId};
+    </select>
+</mapper>
