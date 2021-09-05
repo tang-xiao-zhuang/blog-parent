@@ -15,4 +15,11 @@ public interface ArticleBodyDao {
      * @return
      */
     ArticleBody findByArticleId(Long articleId);
+
+    /**
+     * 保存ArticleBody
+     *
+     * @param articleBody
+     */
+    void save(ArticleBody articleBody);
 }

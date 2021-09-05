@@ -58,4 +58,18 @@ public interface ArticleDao {
      * @param articleId
      */
     void updateViewCount(Long articleId);
+
+    /**
+     * 保存article信息
+     *
+     * @param article
+     */
+    void save(Article article);
+
+    /**
+     * 修改article信息
+     *
+     * @param article
+     */
+    void updateArticleBodyById(Article article);
 }

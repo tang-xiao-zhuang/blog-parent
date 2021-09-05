@@ -2,19 +2,23 @@ package com.zhuang.blog.service.impl;
 
 import com.zhuang.blog.dao.ArticleBodyDao;
 import com.zhuang.blog.dao.ArticleDao;
+import com.zhuang.blog.dao.ArticleTagDao;
+import com.zhuang.blog.entity.ArticleBodyParam;
+import com.zhuang.blog.entity.ArticleParam;
 import com.zhuang.blog.entity.PageParam;
 import com.zhuang.blog.entity.Result;
-import com.zhuang.blog.pojo.Article;
-import com.zhuang.blog.pojo.ArticleBody;
-import com.zhuang.blog.pojo.Category;
+import com.zhuang.blog.pojo.*;
 import com.zhuang.blog.service.*;
+import com.zhuang.blog.utils.UserThreadLocalUtil;
 import com.zhuang.blog.vo.ArticleBodyVo;
 import com.zhuang.blog.vo.ArticleVo;
 import com.zhuang.blog.vo.CategoryVo;
+import com.zhuang.blog.vo.TagVo;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +48,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private AsyncService asyncService;
+
+    @Autowired
+    private ArticleTagDao articleTagDao;
 
     /**
      * 首页文章列表
@@ -106,6 +113,65 @@ public class ArticleServiceImpl implements ArticleService {
         //浏览量+1
         asyncService.addViewCount(article);
         return copy(article, true, true, true, true);
+    }
+
+    /**
+     * 文章发布
+     *
+     * @param articleParam
+     * @return
+     */
+    @Override
+    @Transactional
+    public Result publish(ArticleParam articleParam) {
+        //获取用户信息
+        SysUser user = UserThreadLocalUtil.get();
+        Article article = new Article();
+        article.setCommentCounts(0);
+        article.setCreateDate(System.currentTimeMillis());
+        article.setSummary(articleParam.getSummary());
+        article.setTitle(articleParam.getTitle());
+        article.setViewCounts(0);
+        article.setWeight(0);
+        article.setAuthorId(user.getId());
+        //先设置,后修改
+        article.setBodyId(-1L);
+        article.setCategoryId(articleParam.getCategory().getId());
+        /**
+         * 保存article信息
+         */
+        articleDao.save(article);
+
+        List<TagVo> tags = articleParam.getTags();
+        tags.forEach(t -> {
+            ArticleTag articleTag = new ArticleTag();
+            articleTag.setArticleId(article.getId());
+            articleTag.setTagId(t.getId());
+            /**
+             * 保存ArticleTag
+             */
+            articleTagDao.save(articleTag);
+        });
+
+        ArticleBodyParam body = articleParam.getBody();
+        ArticleBody articleBody = new ArticleBody();
+        articleBody.setArticleId(article.getId());
+        articleBody.setContent(body.getContent());
+        articleBody.setContentHtml(body.getContentHtml());
+        /**
+         * 保存ArticleBody
+         */
+        articleBodyDao.save(articleBody);
+
+        //获取ArticleBody新增后的id,去修改article保存的bodyId
+        article.setBodyId(articleBody.getId());
+        /**
+         * 修改article信息
+         */
+        articleDao.updateArticleBodyById(article);
+        ArticleVo articleVo = new ArticleVo();
+        articleVo.setId(article.getId());
+        return Result.success(articleVo);
     }
 
     /**

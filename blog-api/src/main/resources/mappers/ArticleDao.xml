@@ -4,8 +4,30 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace：给哪个接口配置的映射，写接口的全限定类名-->
 <mapper namespace="com.zhuang.blog.dao.ArticleDao">
+    <insert id="save" parameterType="com.zhuang.blog.pojo.Article">
+        <selectKey resultType="long" order="AFTER" keyProperty="id">
+            select last_insert_id();
+        </selectKey>
+        insert into
+        ms_article(comment_counts,create_date,summary,title,view_counts,weight,author_id,body_id,category_id) values(
+        #{commentCounts},
+        #{createDate},
+        #{summary},
+        #{title},
+        #{viewCounts},
+        #{weight},
+        #{authorId},
+        #{bodyId},
+        #{categoryId}
+        );
+    </insert>
+
     <update id="updateViewCount" parameterType="long">
         update ms_article set view_counts = view_counts + 1 where id = #{articleId}
+    </update>
+
+    <update id="updateArticleBodyById" parameterType="com.zhuang.blog.pojo.Article">
+        update ms_article set body_id = #{bodyId} where id = #{id}
     </update>
 
     <select id="newArticles" resultType="com.zhuang.blog.pojo.Article" parameterType="integer">

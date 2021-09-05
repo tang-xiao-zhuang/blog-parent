@@ -26,4 +26,11 @@ public interface TagDao {
      * @return
      */
     List<Tag> listHotTags(int limit);
+
+    /**
+     * 所有文章标签
+     *
+     * @return
+     */
+    List<Tag> findAll();
 }

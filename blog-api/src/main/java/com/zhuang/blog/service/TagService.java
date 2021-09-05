@@ -1,5 +1,6 @@
 package com.zhuang.blog.service;
 
+import com.zhuang.blog.entity.Result;
 import com.zhuang.blog.vo.TagVo;
 
 import java.util.List;
@@ -25,4 +26,11 @@ public interface TagService {
      * @return
      */
     List<TagVo> listHotTags(int limit);
+
+    /**
+     * 所有文章标签
+     *
+     * @return
+     */
+    Result findAll();
 }

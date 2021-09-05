@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：给哪个接口配置的映射，写接口的全限定类名-->
+<mapper namespace="com.zhuang.blog.dao.ArticleTagDao">
+
+    <insert id="save" parameterType="com.zhuang.blog.pojo.ArticleTag">
+        insert into ms_article_tag(article_id, tag_id)
+        values (#{articleId}, #{tagId})
+    </insert>
+</mapper>

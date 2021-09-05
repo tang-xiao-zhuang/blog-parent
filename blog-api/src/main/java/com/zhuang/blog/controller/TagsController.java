@@ -31,4 +31,14 @@ public class TagsController {
         List<TagVo> tagVoList = tagService.listHotTags(limit);
         return Result.success(tagVoList);
     }
+
+    /**
+     * 所有文章标签
+     *
+     * @return
+     */
+    @GetMapping("/tags")
+    public Result listTags() {
+        return tagService.findAll();
+    }
 }

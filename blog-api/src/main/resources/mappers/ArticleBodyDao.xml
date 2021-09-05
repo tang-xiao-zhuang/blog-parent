@@ -4,6 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace：给哪个接口配置的映射，写接口的全限定类名-->
 <mapper namespace="com.zhuang.blog.dao.ArticleBodyDao">
+    <insert id="save" parameterType="com.zhuang.blog.pojo.ArticleBody">
+        <selectKey resultType="long" order="AFTER" keyProperty="id">
+            select last_insert_id();
+        </selectKey>
+        insert into ms_article_body(content,content_html,article_id) values(#{content},#{contentHtml},#{articleId})
+    </insert>
 
 
     <select id="findByArticleId" resultType="com.zhuang.blog.pojo.ArticleBody" parameterType="long">

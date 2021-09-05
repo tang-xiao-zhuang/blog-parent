@@ -1,5 +1,6 @@
 package com.zhuang.blog.service;
 
+import com.zhuang.blog.entity.Result;
 import com.zhuang.blog.pojo.Category;
 
 /**
@@ -15,4 +16,11 @@ public interface CategoryService {
      * @return
      */
     Category findById(Long categoryId);
+
+    /**
+     * 查询所有文章分类
+     *
+     * @return
+     */
+    Result findAll();
 }

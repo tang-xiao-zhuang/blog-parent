@@ -2,6 +2,8 @@ package com.zhuang.blog.dao;
 
 import com.zhuang.blog.pojo.Category;
 
+import java.util.List;
+
 /**
  * @Author tangqingbo
  * @Date 2021/9/4 11:55
@@ -15,4 +17,11 @@ public interface CategoryDao {
      * @return
      */
     Category findById(Long categoryId);
+
+    /**
+     * 查询所有文章分类
+     *
+     * @return
+     */
+    List<Category> findAll();
 }

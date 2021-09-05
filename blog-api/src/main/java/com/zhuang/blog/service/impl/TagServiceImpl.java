@@ -1,6 +1,7 @@
 package com.zhuang.blog.service.impl;
 
 import com.zhuang.blog.dao.TagDao;
+import com.zhuang.blog.entity.Result;
 import com.zhuang.blog.pojo.Tag;
 import com.zhuang.blog.service.TagService;
 import com.zhuang.blog.vo.TagVo;
@@ -44,6 +45,17 @@ public class TagServiceImpl implements TagService {
     public List<TagVo> listHotTags(int limit) {
         List<Tag> tags = tagDao.listHotTags(limit);
         return copyList(tags);
+    }
+
+    /**
+     * 所有文章标签
+     *
+     * @return
+     */
+    @Override
+    public Result findAll() {
+        List<Tag> tagList = tagDao.findAll();
+        return Result.success(copyList(tagList));
     }
 
     /**

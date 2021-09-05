@@ -20,4 +20,8 @@
         GROUP BY t.id
         ORDER BY COUNT(1) DESC limit #{limit}
     </select>
+
+    <select id="findAll" resultType="com.zhuang.blog.pojo.Tag">
+        select t.id, t.avatar, t.tag_name tagName from ms_tag t
+    </select>
 </mapper>

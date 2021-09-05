@@ -1,5 +1,6 @@
 package com.zhuang.blog.controller;
 
+import com.zhuang.blog.entity.ArticleParam;
 import com.zhuang.blog.service.ArticleService;
 import com.zhuang.blog.entity.PageParam;
 import com.zhuang.blog.entity.Result;
@@ -70,5 +71,16 @@ public class ArticleController {
     @PostMapping("/articles/listArchives")
     public Result listArchives() {
         return articleService.listArchives();
+    }
+
+    /**
+     * 文章发布
+     *
+     * @param articleParam
+     * @return
+     */
+    @PostMapping("/articles/publish")
+    public Result publish(@RequestBody ArticleParam articleParam) {
+        return articleService.publish(articleParam);
     }
 }

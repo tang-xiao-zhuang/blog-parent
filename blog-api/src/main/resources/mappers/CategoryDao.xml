@@ -8,4 +8,8 @@
     <select id="findById" resultType="com.zhuang.blog.pojo.Category" parameterType="long">
         select mc.id,mc.avatar,mc.category_name categoryName,mc.description from ms_category mc where id = #{categoryId};
     </select>
+
+    <select id="findAll" resultType="com.zhuang.blog.pojo.Category">
+        select mc.id,mc.avatar,mc.category_name categoryName,mc.description from ms_category mc
+    </select>
 </mapper>

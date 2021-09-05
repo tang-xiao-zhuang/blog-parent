@@ -1,5 +1,6 @@
 package com.zhuang.blog.service;
 
+import com.zhuang.blog.entity.ArticleParam;
 import com.zhuang.blog.entity.PageParam;
 import com.zhuang.blog.entity.Result;
 import com.zhuang.blog.vo.ArticleVo;
@@ -49,4 +50,12 @@ public interface ArticleService {
      * @return
      */
     ArticleVo findArticleBodyById(Long articleId);
+
+    /**
+     * 文章发布
+     *
+     * @param articleParam
+     * @return
+     */
+    Result publish(ArticleParam articleParam);
 }
