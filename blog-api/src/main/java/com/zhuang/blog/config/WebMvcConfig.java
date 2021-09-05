@@ -44,6 +44,6 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         //todo 需要拦截的路径后续配置
-        registry.addInterceptor(loginInterceptor).addPathPatterns("/test").addPathPatterns("/test01");
+        registry.addInterceptor(loginInterceptor).addPathPatterns("/comments/create/change");
     }
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：给哪个接口配置的映射，写接口的全限定类名-->
+<mapper namespace="com.zhuang.blog.dao.CommentsDao">
+    <insert id="comment" parameterType="com.zhuang.blog.pojo.Comment">
+        insert into ms_comment(content, create_date, article_id, author_id, parent_id, to_uid, level)
+        values (#{content},
+                #{createDate},
+                #{articleId},
+                #{authorId},
+                #{parentId},
+                #{toUid},
+                #{level})
+    </insert>
+
+    <select id="findByArticleId" resultMap="CommentVoMap" parameterType="long">
+        SELECT parent_comment.*,
+               child_comment.id          child_id,
+               child_comment.content     child_content,
+               child_comment.create_date child_create_date,
+               child_comment.article_id  child_article_id,
+               child_comment.author_id   child_author_id,
+               child_comment.parent_id   child_parent_id,
+               child_comment.to_uid      child_to_uid,
+               child_comment.`level`     child_level,
+               parent_author.id          parent_author_id,
+               parent_author.avatar      parent_author_avatar,
+               parent_author.nickname    parent_author_nickname,
+               child_author.id           child_author_id,
+               child_author.avatar       child_author_avatar,
+               child_author.nickname     child_author_nickname,
+               parent_to_user.id         parent_to_user_id,
+               parent_to_user.avatar     parent_to_user_avatar,
+               parent_to_user.nickname   parent_to_user_nickname,
+               child_to_user.id          child_to_user_id,
+               child_to_user.avatar      child_to_user_avatar,
+               child_to_user.nickname    child_to_user_nickname
+        FROM ms_comment child_comment
+                 RIGHT JOIN (
+            SELECT *
+            FROM ms_comment
+            WHERE LEVEL = 1
+              AND article_id = #{articleId}
+        ) parent_comment ON child_comment.parent_id = parent_comment.id
+            AND child_comment.`level` = 2
+                 LEFT JOIN ms_sys_user parent_author ON parent_comment.author_id = parent_author.id
+                 LEFT JOIN ms_sys_user child_author ON child_comment.author_id = child_author.id
+                 LEFT JOIN ms_sys_user parent_to_user ON parent_comment.to_uid = parent_to_user.id
+                 LEFT JOIN ms_sys_user child_to_user ON child_comment.to_uid = child_to_user.id;
+    </select>
+
+    <resultMap id="CommentVoMap" type="com.zhuang.blog.vo.CommentVo">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="createDate" column="create_date"/>
+        <result property="level" column="level"/>
+        <association property="author" javaType="com.zhuang.blog.vo.UserVo">
+            <id property="id" column="parent_author_id"/>
+            <result property="avatar" column="parent_author_avatar"/>
+            <result property="nickname" column="parent_author_nickname"/>
+        </association>
+        <association property="toUser" javaType="com.zhuang.blog.vo.UserVo">
+            <id property="id" column="parent_to_user_id"/>
+            <result property="avatar" column="parent_to_user_avatar"/>
+            <result property="nickname" column="parent_to_user_nickname"/>
+        </association>
+        <collection property="childrens" ofType="com.zhuang.blog.vo.CommentVo">
+            <id property="id" column="child_id"/>
+            <result property="content" column="child_content"/>
+            <result property="createDate" column="child_create_date"/>
+            <result property="level" column="child_level"/>
+            <association property="author" javaType="com.zhuang.blog.vo.UserVo">
+                <id property="id" column="child_author_id"/>
+                <result property="avatar" column="child_author_avatar"/>
+                <result property="nickname" column="child_author_nickname"/>
+            </association>
+            <association property="toUser" javaType="com.zhuang.blog.vo.UserVo">
+                <id property="id" column="child_to_user_id"/>
+                <result property="avatar" column="child_to_user_avatar"/>
+                <result property="nickname" column="child_to_user_nickname"/>
+            </association>
+        </collection>
+    </resultMap>
+</mapper>
