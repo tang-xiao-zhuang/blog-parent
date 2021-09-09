@@ -1,5 +1,6 @@
 package com.zhuang.blog.controller;
 
+import com.zhuang.blog.annotation.LogRecord;
 import com.zhuang.blog.entity.LoginParam;
 import com.zhuang.blog.entity.Result;
 import com.zhuang.blog.service.LoginService;
@@ -26,6 +27,7 @@ public class LoginController {
      * @return
      */
     @PostMapping("/login")
+    @LogRecord(module = "login", operation = "login")
     public Result login(@RequestBody LoginParam loginParam) {
         return loginService.login(loginParam);
     }
