@@ -23,4 +23,19 @@ public interface CategoryService {
      * @return
      */
     Result findAll();
+
+    /**
+     * 查询所有文章分类
+     *
+     * @return
+     */
+    Result categoryDetail();
+
+    /**
+     * 根据分类ID获取信息
+     *
+     * @param id
+     * @return
+     */
+    Result categoriesDetailById(Long id);
 }

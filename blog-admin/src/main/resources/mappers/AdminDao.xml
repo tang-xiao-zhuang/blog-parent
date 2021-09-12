@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：给哪个接口配置的映射，写接口的全限定类名-->
+<mapper namespace="com.zhuang.admin.dao.AdminDao">
+
+    <select id="findAdminByUsername" resultType="com.zhuang.admin.pojo.Admin" parameterType="string">
+        select * from ms_admin where username = #{username}
+    </select>
+
+    <select id="findPermissionByAdminId" resultType="com.zhuang.admin.pojo.Permission" parameterType="long">
+        select mp.* from ms_admin_permission map left join ms_permission mp on map.permission_id = mp.id where map.admin_id = #{id}
+    </select>
+</mapper>

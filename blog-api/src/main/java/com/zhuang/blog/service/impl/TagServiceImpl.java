@@ -59,6 +59,17 @@ public class TagServiceImpl implements TagService {
     }
 
     /**
+     * 查询所有的标签
+     *
+     * @return
+     */
+    @Override
+    public Result tagsDetail() {
+        List<Tag> tagList = tagDao.findAll();
+        return Result.success(tagList);
+    }
+
+    /**
      * 类型转换
      *
      * @param tag

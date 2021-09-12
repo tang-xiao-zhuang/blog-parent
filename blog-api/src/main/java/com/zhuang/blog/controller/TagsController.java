@@ -41,4 +41,14 @@ public class TagsController {
     public Result listTags() {
         return tagService.findAll();
     }
+
+    /**
+     * 查询所有的标签
+     *
+     * @return
+     */
+    @GetMapping("/tags/detail")
+    public Result tagsDetail() {
+        return tagService.tagsDetail();
+    }
 }

@@ -46,6 +46,29 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     /**
+     * 查询所有文章分类
+     *
+     * @return
+     */
+    @Override
+    public Result categoryDetail() {
+        List<Category> categoryList = categoryDao.findAll();
+        return Result.success(categoryList);
+    }
+
+    /**
+     * 根据分类ID获取信息
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Result categoriesDetailById(Long id) {
+        Category category = categoryDao.findById(id);
+        return Result.success(category);
+    }
+
+    /**
      * 类型转换
      *
      * @param categoryList
