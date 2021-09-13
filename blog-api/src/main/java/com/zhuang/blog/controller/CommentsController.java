@@ -3,6 +3,7 @@ package com.zhuang.blog.controller;
 import com.zhuang.blog.entity.CommentParam;
 import com.zhuang.blog.entity.Result;
 import com.zhuang.blog.service.CommentsService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * @Version 1.0
  */
 @RestController
+@Api(tags = "评论信息相关接口")
 public class CommentsController {
     @Autowired
     private CommentsService commentsService;

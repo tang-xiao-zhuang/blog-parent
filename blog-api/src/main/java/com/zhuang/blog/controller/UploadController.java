@@ -2,6 +2,9 @@ package com.zhuang.blog.controller;
 
 import com.zhuang.blog.entity.Result;
 import com.zhuang.blog.utils.QiNiuUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +22,7 @@ import java.util.UUID;
  * @Version 1.0
  */
 @RestController
+@Api(tags = "上传操作相关接口")
 public class UploadController {
 
     @Autowired
@@ -27,6 +31,8 @@ public class UploadController {
     @Value("${qiniu.image.domain}")
     private String domain;
 
+    @ApiOperation("上传图片的接口")
+    @ApiImplicitParam(name = "file", value = "图片名", required = true)
     @PostMapping("/upload")
     public Result upload(@RequestParam("image") MultipartFile file) throws IOException {
         String fileName = UUID.randomUUID() + "." + StringUtils.substringAfterLast(file.getOriginalFilename(), ".");

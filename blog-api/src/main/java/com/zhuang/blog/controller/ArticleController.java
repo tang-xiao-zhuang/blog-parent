@@ -5,6 +5,7 @@ import com.zhuang.blog.service.ArticleService;
 import com.zhuang.blog.entity.PageParam;
 import com.zhuang.blog.entity.Result;
 import com.zhuang.blog.vo.ArticleVo;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * @Version 1.0
  */
 @RestController
+@Api(tags = "文章信息相关接口")
 public class ArticleController {
 
     @Autowired

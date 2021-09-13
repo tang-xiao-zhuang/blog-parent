@@ -2,6 +2,7 @@ package com.zhuang.blog.controller;
 
 import com.zhuang.blog.entity.Result;
 import com.zhuang.blog.service.CategoryService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Version 1.0
  */
 @RestController
+@Api(tags = "分类信息相关接口")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;

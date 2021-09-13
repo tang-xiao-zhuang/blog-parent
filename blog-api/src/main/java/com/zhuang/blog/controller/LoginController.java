@@ -4,6 +4,7 @@ import com.zhuang.blog.annotation.LogRecord;
 import com.zhuang.blog.entity.LoginParam;
 import com.zhuang.blog.entity.Result;
 import com.zhuang.blog.service.LoginService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Version 1.0
  */
 @RestController
+@Api(tags = "登录相关接口")
 public class LoginController {
 
     @Autowired

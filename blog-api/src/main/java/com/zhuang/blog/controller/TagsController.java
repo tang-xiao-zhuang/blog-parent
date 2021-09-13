@@ -3,6 +3,7 @@ package com.zhuang.blog.controller;
 import com.zhuang.blog.entity.Result;
 import com.zhuang.blog.service.TagService;
 import com.zhuang.blog.vo.TagVo;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import java.util.List;
  * @Version 1.0
  */
 @RestController
+@Api(tags = "标签信息相关接口")
 public class TagsController {
     @Autowired
     private TagService tagService;
